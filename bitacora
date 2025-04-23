@@ -1,0 +1,32 @@
+K = 20 
+
+base (semantic chunking + hybrid search [.15 text | .85 embd] + Textract); 53.4%
+base + metadata_full; 45.65%
+base + metadata_titulo; 56.9%
+contextual_chunking; 45% 
+base + contextual_chunking : ...
+LLM_chunking_reestructuration; 63.2%
+SOLO PDF's con < 6 paǵinas
+    LLM_chunking_reestructuration; 70%    
+    LLM_HYDE; 70% 
+    NOTA: LA CONFIG DE HNSW SÍ ES MUY RELEVANTE EN EL RESULTADO 
+
+LLM_chunking_reestructuration + Gabriel idea; 55%
+recursive_rag_hybrid; 
+
+
+
+
+
+
+
+# Ideas nuevas: 
+
+
+- En lugar de crear un nuevo chunk a partir de reestructuración, crear una pregunta hipotética que podría hacer el usuario que le corresponda al chunk. 
+    - Cambiar el modelo de Embedding https://huggingface.co/BAAI/bge-m3
+- HyDE 
+- Query decomposition 
+- Prev retrieval to improve query structure
+
+
