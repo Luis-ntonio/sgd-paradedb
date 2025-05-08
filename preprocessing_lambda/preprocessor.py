@@ -92,13 +92,13 @@ class Preprocessor:
                 raise
             
             
-            images_page = pdf.get_page_images(num_page, full=True)
+            #images_page = pdf.get_page_images(num_page, full=True)
             
             images_paths = []
             tables_paths = []
             
             # Image detection
-            if len(images_page) > 0:
+            """if len(images_page) > 0:
                 for num_image, image in enumerate(images_page):
                     image_bbox = image[0]
                     
@@ -110,7 +110,7 @@ class Preprocessor:
                     images_paths.append(image_name.split("/")[1])
                     
                     # Upload image to S3
-                    s3_bucket.upload_fileobj(BytesIO(image_bytes), "sgd-rag-test", image_name)
+                    s3_bucket.upload_fileobj(BytesIO(image_bytes), "sgd-rag-test", image_name)"""
             
             # Table detection
             """if len(tables) > 0:

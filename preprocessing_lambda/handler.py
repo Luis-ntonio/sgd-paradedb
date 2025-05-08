@@ -44,9 +44,9 @@ def handler(event, context):
                     page['document_name'] = key
                     
                     message_body = json.dumps(page)
-                    response = sqs_client.send_message(QueueUrl=IMG_QUEUE, MessageBody=message_body)                   
+                    """response = sqs_client.send_message(QueueUrl=IMG_QUEUE, MessageBody=message_body)                   
                     if response['ResponseMetadata']['HTTPStatusCode'] != 200:
-                        raise Exception("Error enqueuing message to sqs")
+                        raise Exception("Error enqueuing message to sqs")"""
                     
                     response = sqs_client.send_message(QueueUrl=TEXT_QUEUE, MessageBody=message_body)   
                     if response['ResponseMetadata']['HTTPStatusCode'] != 200:
