@@ -151,3 +151,51 @@ def rewrite_query_prompt():
     {document} 
 </document> 
 """
+
+"""
+--------------------------------------------------------------------------------------------------------
+                                        PROMPTS DE ETIQUETADO
+--------------------------------------------------------------------------------------------------------                                
+"""
+
+def generate_label_prompt():
+    return f"""
+    Eres un etiquetador de documentos. Tu tarea es, dado un documento, asignar una etiqueta que lo clasifique de la mejor manera posible. Si el documento cuenta con una seccion de 'Asunto' hacer enfasis a lo mencionado alli para determinar la etiqueta. La etiqueta debe ser una de las siguientes opciones:
+
+Opciones de etiquetas:
+- Boleta
+- Factura
+- Recibo
+- Comprobante
+- Informe
+- Anexo
+- Resolución
+- Certificado
+- Correo
+- Solicitud
+- Acta
+
+Descripcion de la etiqueta:
+- Boleta: Documento que acredita la entrega de un bien o servicio. Incluye detalles como el monto, la fecha y el vendedor.
+- Factura: Documento que detalla la venta de bienes o servicios. Incluye información sobre el vendedor, el comprador y los productos o servicios vendidos.
+- Recibo: Documento que confirma el pago de una deuda o servicio. Incluye detalles como la fecha, el monto y el receptor del pago.
+- Comprobante: Documento que respalda una transacción o actividad. Incluye información sobre la naturaleza de la transacción y las partes involucradas.
+- Informe: Documento que presenta información sobre un tema específico. Incluye análisis, conclusiones y recomendaciones.
+- Anexo: Documento adicional que complementa otro documento. Incluye información relevante que no se incluyó en el documento principal. Inicia principalmente con ANEXO.
+- Resolución: Documento que contiene una decisión o acuerdo oficial. Incluye detalles sobre el contexto y las partes involucradas.
+- Certificado: Documento que acredita la veracidad de un hecho o situación. Incluye información sobre el emisor y el receptor del certificado.
+- Correo: Documento que contiene una comunicación escrita. Incluye detalles sobre el remitente, el destinatario, saludo y despedida cordial y el contenido del mensaje.
+- Solicitud: Documento que formaliza una petición o requerimiento. Incluye información sobre el solicitante y el motivo de la solicitud.
+- Acta: Documento que registra los hechos ocurridos en una reunión o evento. Incluye detalles sobre los participantes, el contexto y las decisiones tomadas.
+
+El formato de la etiqueta debe ser exactamente el siguiente:
+<justificacion>
+    <Etiqueta>
+        Aquí va la etiqueta.
+    </Etiqueta>
+
+Por favor, solo incluye la etiqueta en el formato especificado. No añadas ningún texto adicional, explicación, o comentario que no sea la etiqueta solicitada. El único contenido en la respuesta debe ser la etiqueta en el formato mencionado.
+
+Ejemplo:
+    <Etiqueta>
+    """

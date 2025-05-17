@@ -136,6 +136,7 @@ def process_message(message, opensearch_client):
         chunk = body['chunk']
         page = body['page']
         document = body['document']
+        label = body['label']
         upload_datetime = datetime.now().isoformat()
 
         # Create a document to insert into OpenSearch
@@ -144,6 +145,7 @@ def process_message(message, opensearch_client):
             "page": page,
             "chunk": chunk,
             "embedding": embedding,
+            "label": label,
             "upload_datetime": upload_datetime
         }
 

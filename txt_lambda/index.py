@@ -41,7 +41,8 @@ def handler(event, context):
                     "embedding" : embd,
                     "chunk" : chunk,
                     "page" : body["page"],
-                    "document" : body["document_name"]
+                    "document" : body["document_name"],
+                    "label" : body["document_label"]
                 })
                 response = sqs_client.send_message(QueueUrl=url, MessageBody=message_body)                   
 

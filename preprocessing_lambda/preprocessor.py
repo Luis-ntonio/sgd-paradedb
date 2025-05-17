@@ -14,6 +14,7 @@ import gmft.common
 from tqdm import tqdm
 import boto3
 import base64
+from prompt import generate_label_prompt
 
 import ai_calls
 from prompt import generate_table_scan_prompt, generate_image_scan_prompt
@@ -77,15 +78,26 @@ class Preprocessor:
         except Exception as e:
             logger.error(f"Error reading metadata from document: {str(e)}")
             metadata = {"title": doc_name}
-
+        text_for_label = ""
         for num_page, page in tqdm(enumerate(pdf)):
             #tables = self.detector.detect(page)
             print(f"Processing page {num_page}")
             try: 
-                
+
                 text = page.get_text().replace("\n", " ")
                 text = chunker.split_text(" ".join(text.split()))
-                
+                if num_page < 2:
+                    text_for_label = " ".join(text)
+                elif num_page == 2:
+                    prompt = generate_label_prompt()
+                    response = ai_calls.claude_call(
+                        bedrock_client,
+                        system_prompt=prompt,
+                        query=f"<Texto>{text_for_label}</Texto>",
+                    )
+                    label = response
+                # if 'Anexo' in label:
+                #     return [], Anexo
                 logger.info(f"Text: {text}")
             except Exception as e:
                 logger.error(f"Error reading text from page {num_page}: {str(e)}")
@@ -137,11 +149,12 @@ class Preprocessor:
                 "images": images_paths,
                 "tables": tables_paths,
                 "page": num_page,
+
             }
             content_per_page.append(content)
-    
+        logger.info(f"Content per page: {content_per_page} label: {label}")
         pdf.close()
-        return content_per_page
+        return content_per_page, label
     
     
     def preprocess_table(self, context_text : str ,table_path : str):

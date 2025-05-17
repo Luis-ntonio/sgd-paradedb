@@ -37,13 +37,19 @@ def handler(event, context):
             
             try: 
                 
-                pdf_reader = preprop.read_document(key, BytesIO(pdf_content), "Images/")
-                
+                pdf_reader, label = preprop.read_document(key, BytesIO(pdf_content), "Images/")
+
+                #if label == "Anexo":
+                #    return {
+                #        "status": "error",
+                #        "body": json.dumps("Ommited Anexo")}
                 # enqueue to a sqs information to a sqs queue
                 for page in pdf_reader:
                     page['document_name'] = key
+                    page['document_label'] = label
                     
                     message_body = json.dumps(page)
+                    print(f"Message body: {message_body}", label)
                     """response = sqs_client.send_message(QueueUrl=IMG_QUEUE, MessageBody=message_body)                   
                     if response['ResponseMetadata']['HTTPStatusCode'] != 200:
                         raise Exception("Error enqueuing message to sqs")"""

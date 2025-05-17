@@ -45,7 +45,7 @@ def claude_body(system_prompt : str,
 def claude_call( bedrock : boto3.client, 
                 system_prompt : str, 
                 query : str,
-                model : int = 1, 
+                model : int = 2, 
                 max_tokens : int =4000,
                 images : list = None):
     
@@ -53,7 +53,7 @@ def claude_call( bedrock : boto3.client,
     if model == 1: 
         model_id = 'us.anthropic.claude-3-5-haiku-20241022-v1:0'
     else:
-        model_id = 'anthropic.claude-3-5-sonnet-20240620-v1:0'
+        model_id = 'us.anthropic.claude-3-5-sonnet-20241022-v2:0'
     
         
     body = claude_body(system_prompt, query=query, max_tokens=max_tokens, images=images)
